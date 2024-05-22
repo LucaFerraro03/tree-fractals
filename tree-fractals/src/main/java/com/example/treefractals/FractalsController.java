@@ -58,7 +58,7 @@ public class FractalsController {
     public void initialize() {
 
         myCanvas.setWidth(Screen.getPrimary().getBounds().getWidth() * 2);
-        myCanvas.setHeight(Screen.getPrimary().getBounds().getHeight() * 0.8865);
+        myCanvas.setHeight(Screen.getPrimary().getBounds().getHeight() * 0.89);
 
         gc = myCanvas.getGraphicsContext2D();
         gc.setFill(Color.BLACK);
