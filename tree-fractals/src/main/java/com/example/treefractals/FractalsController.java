@@ -10,12 +10,9 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
-
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.util.Duration;
-
-import java.util.EventListener;
 import java.util.random.RandomGenerator;
 
 public class FractalsController {
@@ -54,7 +51,6 @@ public class FractalsController {
 
     private int  red, blue, green;
     private double angleLeft, angleRight;
-    private int animationDuration;
 
     /*
         to do:
@@ -114,7 +110,7 @@ public class FractalsController {
         cmbChoice.setDisable(false);
     }
 
-    public void onComboItemPicked(ActionEvent event) {
+    public void onComboItemPicked() {
         if(!cmbChoice.getSelectionModel().isEmpty()) {
             String choice = cmbChoice.getSelectionModel().getSelectedItem();
 
@@ -131,7 +127,7 @@ public class FractalsController {
         }
     }
 
-    public void onRandomColorPicked(ActionEvent event) {
+    public void onRandomColorPicked() {
         red = RandomGenerator.getDefault().nextInt(255);
         blue = RandomGenerator.getDefault().nextInt(255);
         green = RandomGenerator.getDefault().nextInt(255);
@@ -145,7 +141,7 @@ public class FractalsController {
         }
     }
 
-    public void onPickColorPicked(ActionEvent event) {
+    public void onPickColorPicked() {
         btDraw.setDisable(false);
         colorPicker.setDisable(false);
 
@@ -154,14 +150,13 @@ public class FractalsController {
         }
     }
 
-
-    public void onClearClicked(ActionEvent event) {
+    public void onClearClicked() {
         gc.fillRect(0, 0, myCanvas.getWidth(), myCanvas.getHeight());
         disabling();
         cmbChoice.getSelectionModel().clearSelection();
     }
 
-    public void onDrawClicked(ActionEvent event) {
+    public void onDrawClicked() {
         if ( chkPickColor.isSelected() ) {
             red = ( int ) (colorPicker.getValue().getRed() * 255);
             blue = ( int ) (colorPicker.getValue().getBlue() * 255);
@@ -201,7 +196,7 @@ public class FractalsController {
     private void animateLine(Point2D start, Point2D end, double lineWidth, double factorscale, Runnable onFinish) {
         DoubleProperty lengthProperty = new SimpleDoubleProperty(0);
 
-        animationDuration = (int) (spDuration.getValue() * 1000);
+        int animationDuration = (int) (spDuration.getValue() * 1000);
 
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(lengthProperty, 0)),
