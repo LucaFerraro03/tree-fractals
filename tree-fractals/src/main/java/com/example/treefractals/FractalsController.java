@@ -52,9 +52,9 @@ public class FractalsController {
 
     private GraphicsContext gc;
 
-    int red, blue, green;
-    double angleLeft, angleRight;
-    int animationDuration;
+    private int  red, blue, green;
+    private double angleLeft, angleRight;
+    private int animationDuration;
 
     /*
         to do:
