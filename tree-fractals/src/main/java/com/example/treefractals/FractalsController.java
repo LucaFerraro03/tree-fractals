@@ -57,8 +57,11 @@ public class FractalsController {
 
     public void initialize() {
 
-        myCanvas.setWidth(Screen.getPrimary().getBounds().getWidth() * 2);
-        myCanvas.setHeight(Screen.getPrimary().getBounds().getHeight() * 0.89);
+        double screenWidth = Screen.getPrimary().getBounds().getWidth();
+        double screenHeight = Screen.getPrimary().getBounds().getHeight();
+
+        myCanvas.setWidth(screenWidth * 2);
+        myCanvas.setHeight(screenHeight * 0.8859);
 
         gc = myCanvas.getGraphicsContext2D();
         gc.setFill(Color.BLACK);
@@ -119,7 +122,9 @@ public class FractalsController {
         green = RandomGenerator.getDefault().nextInt(255);
 
         btDraw.setDisable(false);
-        chkPickColor.setDisable(true);
+
+
+        //chkPickColor.setDisable(true);
     }
 
 
@@ -127,7 +132,7 @@ public class FractalsController {
 
         btDraw.setDisable(false);
         colorPicker.setDisable(false);
-        chkRndColor.setDisable(true);
+        //chkRndColor.setDisable(true);
     }
 
 
@@ -149,7 +154,7 @@ public class FractalsController {
             green = ( int ) (colorPicker.getValue().getGreen() * 255);
         }
 
-        drawBranchRecursive(new Point2D(myCanvas.getWidth() / 2, myCanvas.getHeight() - 200),
+        drawBranchRecursive(new Point2D(myCanvas.getWidth() / 2.033, myCanvas.getHeight() - 200),
                             -90, myCanvas.getHeight() / 7, 1, 10, 1, Color.rgb(red, green, blue));
 
         // drawBranchesIterative(new Point2D(myCanvas.getWidth() / 2, myCanvas.getHeight() - 200),
