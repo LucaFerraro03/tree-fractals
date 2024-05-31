@@ -58,6 +58,7 @@ public class FractalsController {
         3) combobox per alberi già configurati (update dei parametri anche qua, usiamo la stessa load maybe?)
            (variabili globali per i parametri, per forza!)
         4) pulizia del codice e refactoring
+        5) eventuale css
      */
 
     public void initialize() {
