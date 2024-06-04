@@ -23,28 +23,34 @@ public class FractalsController {
     private Button btDraw;
 
     @FXML
-    private CheckBox chkPickColor;
+    private Button btLoad;
 
     @FXML
-    private ColorPicker colorPicker;
+    private CheckBox chkPickColor;
 
     @FXML
     private CheckBox chkRndColor;
 
     @FXML
-    private Canvas myCanvas;
-
-    @FXML
     private ComboBox<String> cmbChoice;
 
     @FXML
-    private Spinner< Integer > spLeftBranch;
+    private ColorPicker colorPicker;
 
     @FXML
-    private Spinner< Integer > spRightBranch;
+    private Canvas myCanvas;
 
     @FXML
-    private Spinner< Double> spDuration;
+    private Spinner<Double> spDuration;
+
+    @FXML
+    private Spinner<Integer> spLeftBranch;
+
+    @FXML
+    private Spinner<Integer> spRightBranch;
+
+    @FXML
+    private TextField txtUserFractal;
 
     private GraphicsContext gc;
 
@@ -66,7 +72,7 @@ public class FractalsController {
         double screenHeight = Screen.getPrimary().getBounds().getHeight();
 
         myCanvas.setWidth(screenWidth * 2);
-        myCanvas.setHeight(screenHeight * 0.8859);
+        myCanvas.setHeight(screenHeight * 0.88589);
 
         gc = myCanvas.getGraphicsContext2D();
         gc.setFill(Color.BLACK);
@@ -75,6 +81,11 @@ public class FractalsController {
         cmbChoice.setItems(FXCollections.observableArrayList("Tree Fractals"));
 
         disabling();
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Usage Information");
+        alert.setContentText("If you have any issue with how this app works make sure to check the README file!");
+        alert.showAndWait();
 
         spLeftBranch.setEditable(true);
         spLeftBranch.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 150, 30, 1));
@@ -150,6 +161,10 @@ public class FractalsController {
         }
     }
 
+    public void onLoadClicked(){
+
+    }
+
     public void onClearClicked() {
         gc.fillRect(0, 0, myCanvas.getWidth(), myCanvas.getHeight());
         disabling();
@@ -167,11 +182,11 @@ public class FractalsController {
                             -90, myCanvas.getHeight() / 7, 1, 10, 1, Color.rgb(red, green, blue));
     }
 
-    private void drawBranchRecursive(Point2D start, double rotation, double len, double factorscale, double lineWidth, int depth, Color color) {
-        drawTree(start, rotation, len, factorscale, lineWidth, depth, color);
+    private void drawBranchRecursive(Point2D start, double rotation, double len, double factorScale, double lineWidth, int depth, Color color) {
+        drawTree(start, rotation, len, factorScale, lineWidth, depth, color);
     }
 
-    private void drawTree(Point2D start, double rotation, double len, double factorscale, double lineWidth, int depth, Color color) {
+    private void drawTree(Point2D start, double rotation, double len, double factorScale, double lineWidth, int depth, Color color) {
         angleLeft = spLeftBranch.getValue();
         angleRight = spRightBranch.getValue();
 
@@ -180,20 +195,20 @@ public class FractalsController {
 
         Point2D end = findEndPoint(start, rotation, len);
 
-        animateLine(start, end, lineWidth, factorscale, () -> {
-            gc.setLineWidth(lineWidth / factorscale);
+        animateLine(start, end, lineWidth, factorScale, () -> {
+            gc.setLineWidth(lineWidth / factorScale);
             gc.strokeLine(start.getX(), start.getY(), end.getX(), end.getY());
 
             if ( len > 4 ) {
-                drawBranchRecursive(end, rotation - angleLeft, len * 0.8, factorscale / 0.6, lineWidth, depth + 1, betterColor);
-                drawBranchRecursive(end, rotation + angleRight, len * 0.8, factorscale / 0.6, lineWidth, depth + 1, betterColor);
+                drawBranchRecursive(end, rotation - angleLeft, len * 0.8, factorScale / 0.6, lineWidth, depth + 1, betterColor);
+                drawBranchRecursive(end, rotation + angleRight, len * 0.8, factorScale / 0.6, lineWidth, depth + 1, betterColor);
             }else{
                 btClear.setDisable(false);
             }
         });
     }
 
-    private void animateLine(Point2D start, Point2D end, double lineWidth, double factorscale, Runnable onFinish) {
+    private void animateLine(Point2D start, Point2D end, double lineWidth, double factorScale, Runnable onFinish) {
         DoubleProperty lengthProperty = new SimpleDoubleProperty(0);
 
         int animationDuration = (int) (spDuration.getValue() * 1000);
@@ -209,7 +224,7 @@ public class FractalsController {
             double animatedLength = newValue.doubleValue();
             Point2D animatedEnd = interpolatePoint(start, end, animatedLength / end.distance(start));
 
-            gc.setLineWidth(lineWidth / factorscale);
+            gc.setLineWidth(lineWidth / factorScale);
             gc.strokeLine(start.getX(), start.getY(), animatedEnd.getX(), animatedEnd.getY());
         });
 
