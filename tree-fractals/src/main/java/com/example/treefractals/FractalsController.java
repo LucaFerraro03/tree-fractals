@@ -55,7 +55,7 @@ public class FractalsController {
     private GraphicsContext gc;
 
     private int  red, blue, green;
-    private double angleLeft, angleRight;
+    private int angleLeft, angleRight;
     private Alert alert;
 
     /*
