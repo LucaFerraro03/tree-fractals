@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.util.Duration;
+
 import java.util.random.RandomGenerator;
 
 public class FractalsController {
@@ -32,7 +33,7 @@ public class FractalsController {
     private CheckBox chkRndColor;
 
     @FXML
-    private ComboBox<String> cmbChoice;
+    private ComboBox< String > cmbChoice;
 
     @FXML
     private ColorPicker colorPicker;
@@ -41,32 +42,23 @@ public class FractalsController {
     private Canvas myCanvas;
 
     @FXML
-    private Spinner<Double> spDuration;
+    private Spinner< Double > spDuration;
 
     @FXML
-    private Spinner<Integer> spLeftBranch;
+    private Spinner< Integer > spLeftBranch;
 
     @FXML
-    private Spinner<Integer> spRightBranch;
+    private Spinner< Integer > spRightBranch;
 
     @FXML
     private TextField txtUserFractal;
 
     private GraphicsContext gc;
 
-    private int  red, blue, green;
+    private int red, blue, green;
     private int angleLeft, angleRight;
     private Alert alert;
 
-    /*
-        to do:
-        1) text box per configurazione alberi esterni al programma (utilizzare un metacarattere per dividere i parametri)
-        2) pulsante load per il settaggio del parametri
-        3) combobox per alberi già configurati (update dei parametri anche qua, usiamo la stessa load maybe?)
-           (variabili globali per i parametri, per forza!)
-        4) pulizia del codice e refactoring
-        5) eventuale css
-     */
 
     public void initialize() {
         double screenWidth = Screen.getPrimary().getBounds().getWidth();
@@ -79,10 +71,10 @@ public class FractalsController {
         gc.setFill(Color.BLACK);
         gc.fillRect(myCanvas.getLayoutX(), myCanvas.getLayoutY(), myCanvas.getWidth(), myCanvas.getHeight());
 
-        cmbChoice.setItems(FXCollections.observableArrayList( "15-15 GREEN", "30-30 SIENNA", "90-90 OLIVE",
-                                                                   "30-130 PURPLE", "120-60 YELLOW", "105-75 BLUE",
-                                                                   "19-89 PINK", "82-8 FUCHSIA", "12-26 SALMON",
-                                                                   "69-45 TURQUOISE"));
+        cmbChoice.setItems(FXCollections.observableArrayList("15-15 GREEN", "30-30 SIENNA", "90-90 OLIVE",
+                                                             "30-130 PURPLE", "120-60 YELLOW", "105-75 BLUE",
+                                                             "19-89 PINK", "82-8 FUCHSIA", "12-26 SALMON",
+                                                             "69-45 TURQUOISE"));
 
         settings();
 
@@ -105,6 +97,7 @@ public class FractalsController {
     private void settings() {
         btClear.setDisable(true);
         btDraw.setDisable(true);
+        btLoad.setDisable(false);
 
         chkPickColor.setDisable(false);
         chkRndColor.setDisable(false);
@@ -116,67 +109,77 @@ public class FractalsController {
 
         colorPicker.setDisable(true);
 
+        txtUserFractal.setText("");
 
-        if(chkPickColor.isSelected()) {
+        if ( chkPickColor.isSelected() ) {
             colorPicker.setValue(Color.WHITE);
             chkPickColor.setSelected(false);
         }
 
-        if(chkRndColor.isSelected()) {
+        if ( chkRndColor.isSelected() ) {
             chkRndColor.setSelected(false);
         }
     }
 
     public void onComboItemPicked() {
-        if(!cmbChoice.getSelectionModel().isEmpty()) {
+        if ( !cmbChoice.getSelectionModel().isEmpty() ) {
             String choice = cmbChoice.getSelectionModel().getSelectedItem();
 
-            if (choice.equals("30-30 SIENNA")) {
+            if ( choice.equals("30-30 SIENNA") ) {
                 spLeftBranch.getValueFactory().setValue(30);
                 spRightBranch.getValueFactory().setValue(30);
                 colorPicker.setValue(Color.SIENNA);
 
-            }else if(choice.equals("15-15 GREEN")) {
+            }
+            else if ( choice.equals("15-15 GREEN") ) {
                 spLeftBranch.getValueFactory().setValue(15);
                 spRightBranch.getValueFactory().setValue(15);
                 colorPicker.setValue(Color.GREEN);
 
-            }else if(choice.equals("30-130 PURPLE")) {
+            }
+            else if ( choice.equals("30-130 PURPLE") ) {
                 spLeftBranch.getValueFactory().setValue(30);
                 spRightBranch.getValueFactory().setValue(130);
                 colorPicker.setValue(Color.PURPLE);
 
-            }else if(choice.equals("60-120 YELLOW")) {
+            }
+            else if ( choice.equals("60-120 YELLOW") ) {
                 spLeftBranch.getValueFactory().setValue(60);
                 spRightBranch.getValueFactory().setValue(120);
                 colorPicker.setValue(Color.YELLOW);
 
-            }else if(choice.equals("105-75 BLUE")) {
+            }
+            else if ( choice.equals("105-75 BLUE") ) {
                 spLeftBranch.getValueFactory().setValue(105);
                 spRightBranch.getValueFactory().setValue(75);
                 colorPicker.setValue(Color.BLUE);
 
-            }else if(choice.equals("19-89 PINK")) {
+            }
+            else if ( choice.equals("19-89 PINK") ) {
                 spLeftBranch.getValueFactory().setValue(19);
                 spRightBranch.getValueFactory().setValue(89);
                 colorPicker.setValue(Color.PINK);
 
-            }else if(choice.equals("82-8 FUCHSIA")){
+            }
+            else if ( choice.equals("82-8 FUCHSIA") ) {
                 spLeftBranch.getValueFactory().setValue(82);
                 spRightBranch.getValueFactory().setValue(8);
                 colorPicker.setValue(Color.FUCHSIA);
 
-            }else if(choice.equals("12-26 SALMON")){
+            }
+            else if ( choice.equals("12-26 SALMON") ) {
                 spLeftBranch.getValueFactory().setValue(12);
                 spRightBranch.getValueFactory().setValue(26);
                 colorPicker.setValue(Color.SALMON);
 
-            }else if(choice.equals("69-45 TURQUOISE")) {
+            }
+            else if ( choice.equals("69-45 TURQUOISE") ) {
                 spLeftBranch.getValueFactory().setValue(69);
                 spRightBranch.getValueFactory().setValue(45);
                 colorPicker.setValue(Color.TURQUOISE);
 
-            }else if(choice.equals("90-90 OLIVE")) {
+            }
+            else if ( choice.equals("90-90 OLIVE") ) {
                 spLeftBranch.getValueFactory().setValue(90);
                 spRightBranch.getValueFactory().setValue(90);
                 colorPicker.setValue(Color.OLIVE);
@@ -196,7 +199,7 @@ public class FractalsController {
 
         btDraw.setDisable(false);
 
-        if(chkPickColor.isSelected()) {
+        if ( chkPickColor.isSelected() ) {
             colorPicker.setValue(Color.WHITE);
             colorPicker.setDisable(true);
             chkPickColor.setSelected(false);
@@ -207,12 +210,68 @@ public class FractalsController {
         btDraw.setDisable(false);
         colorPicker.setDisable(false);
 
-        if(chkRndColor.isSelected()) {
+        if ( chkRndColor.isSelected() ) {
             chkRndColor.setSelected(false);
         }
     }
 
-    public void onLoadClicked(){
+    public void onLoadClicked() {
+        String[] userParams = txtUserFractal.getText().split("\\.");
+        int duration = 0;
+
+        alert.setAlertType(Alert.AlertType.ERROR);
+        alert.setTitle("Invalid string inserted!");
+        alert.setHeaderText(null);
+        alert.setHeight(175);
+        alert.setWidth(500);
+
+        if ( userParams.length != 4 ) {
+
+           alert.setContentText("""
+                                    Number of params wrong!
+                                    Please insert exactly 4 params!
+                                """);
+           alert.showAndWait();
+        }
+        else{
+            try {
+                Color c = Color.valueOf(userParams[0].toUpperCase());
+                chkPickColor.setSelected(true);
+                colorPicker.setValue(c);
+                colorPicker.setDisable(false);
+
+                angleLeft = Integer.parseInt(userParams[1]);
+                angleRight = Integer.parseInt(userParams[2]);
+
+                duration = Integer.parseInt(userParams[3]);
+            }
+            catch ( Exception e ) {
+                alert.setContentText("""
+                                     Wrong string format!
+                                     An example of valid string: GREEN.20.50.2000
+                                 """);
+                alert.showAndWait();
+                return;
+            }
+
+
+            if ( (angleLeft < 0 || angleLeft > 150) || (angleRight < 0 || angleRight > 150) || (duration < 1000 || duration > 3000) ) {
+
+                alert.setContentText("""
+                                     Params out of bounds!
+                                     Second and third param must be a value between 0 and 150 (included)!
+                                     Fourth param must be a value between 1000 and 3000 (included)!
+                                 """);
+                alert.showAndWait();
+                return;
+            }
+            else {
+                spLeftBranch.getValueFactory().setValue(angleLeft);
+                spRightBranch.getValueFactory().setValue(angleRight);
+                spDuration.getValueFactory().setValue(( double ) duration / 1000);
+                btDraw.setDisable(false);
+            }
+        }
 
     }
 
@@ -231,6 +290,8 @@ public class FractalsController {
         spLeftBranch.setDisable(true);
         spRightBranch.setDisable(true);
         spDuration.setDisable(true);
+        btLoad.setDisable(true);
+        cmbChoice.setDisable(true);
 
         if ( chkPickColor.isSelected() ) {
             red = ( int ) (colorPicker.getValue().getRed() * 255);
@@ -238,10 +299,10 @@ public class FractalsController {
             green = ( int ) (colorPicker.getValue().getGreen() * 255);
         }
 
-        drawBranch(new Point2D(myCanvas.getWidth() / 2.033, myCanvas.getHeight() - 200),
+        drawBranch(new Point2D(myCanvas.getWidth() / 2.033, myCanvas.getHeight() - 230),
                    -90, myCanvas.getHeight() / 7, 1, 10, 1, Color.rgb(red, green, blue));
     }
-    
+
     private void drawBranch(Point2D start, double rotation, double len, double factorScale, double lineWidth, int depth, Color color) {
         angleLeft = spLeftBranch.getValue();
         angleRight = spRightBranch.getValue();
@@ -258,9 +319,11 @@ public class FractalsController {
             if ( len > 4 ) {
                 drawBranch(end, rotation - angleLeft, len * 0.8, factorScale / 0.6, lineWidth, depth + 1, newColor);
                 drawBranch(end, rotation + angleRight, len * 0.8, factorScale / 0.6, lineWidth, depth + 1, newColor);
-            }else{
+            }
+            else {
                 btClear.setDisable(false);
                 btDraw.setDisable(true);
+
             }
         });
     }
@@ -268,7 +331,7 @@ public class FractalsController {
     private void animateLine(Point2D start, Point2D end, double lineWidth, double factorScale, Runnable onFinish) {
         DoubleProperty lengthProperty = new SimpleDoubleProperty(0);
 
-        int animationDuration = (int) (spDuration.getValue() * 1000);
+        int animationDuration = ( int ) (spDuration.getValue() * 1000);
 
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(lengthProperty, 0)),
