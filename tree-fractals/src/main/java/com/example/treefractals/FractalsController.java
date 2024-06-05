@@ -78,12 +78,6 @@ public class FractalsController {
 
         settings();
 
-        alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Usage Information");
-        alert.setHeaderText(null);
-        alert.setContentText("If you have any issue with how this app works make sure to check the README file!");
-        alert.showAndWait();
-
         spLeftBranch.setEditable(true);
         spLeftBranch.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 150, 0, 1));
 
@@ -208,6 +202,27 @@ public class FractalsController {
         }
     }
 
+    public void onInfoClicked(){
+        alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Usage Information");
+        alert.setHeaderText(null);
+        alert.setContentText("""
+                                Welcome to the 2D Tree Fractals application!
+                                You can have fun building your own tree fractal from scratch
+                                or choose from a variety of premade ones!
+                             
+                                If by any chance you have issues undestanding how to use
+                                this application, make sure to check the README file!
+                                There you will find a more thorough explanation on how
+                                this works, so that nothing will be on the way of
+                                your experience!
+                             
+                                Now let your imagination run free and be sure
+                                to let others know of this app!
+                             """);
+        alert.showAndWait();
+    }
+
     public void onLoadClicked() {
         String[] userParams = txtUserFractal.getText().split("\\.");
 
@@ -263,7 +278,6 @@ public class FractalsController {
                 btDraw.setDisable(false);
             }
         }
-
     }
 
     public void onClearClicked() {

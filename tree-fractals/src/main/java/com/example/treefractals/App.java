@@ -17,7 +17,7 @@ public class App extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("fractals.fxml")));
         Scene scene = new Scene(root);
-        stage.setTitle("2D Fractals");
+        stage.setTitle("2D Tree Fractals");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setMaximized(true);

@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="myBorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="975.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.treefractals.FractalsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="975.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.treefractals.FractalsController">
     <center>
         <Canvas fx:id="myCanvas" height="800.0" width="1600.0">
             <BorderPane.margin>
@@ -24,7 +24,16 @@
     <top>
         <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
-                <VBox prefHeight="100.0" prefWidth="97.0">
+            <VBox prefHeight="100.0" prefWidth="45.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onInfoClicked" text="?">
+                     <VBox.margin>
+                        <Insets left="10.0" top="20.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+                <VBox prefHeight="100.0" prefWidth="93.0">
                     <children>
                         <Button fx:id="btDraw" mnemonicParsing="false" onAction="#onDrawClicked" text="Draw">
                             <VBox.margin>
@@ -126,7 +135,7 @@
                         </Spinner>
                     </children>
                 </VBox>
-            <VBox prefHeight="100.0" prefWidth="374.0">
+            <VBox prefHeight="100.0" prefWidth="317.0">
                <children>
                   <HBox prefHeight="51.0" prefWidth="308.0">
                      <children>
@@ -135,9 +144,9 @@
                               <Insets top="20.0" />
                            </HBox.margin>
                         </Label>
-                        <Button fx:id="btLoad" mnemonicParsing="false" onAction="#onLoadClicked" prefHeight="25.0" prefWidth="54.0" text="Load">
+                        <Button fx:id="btLoad" mnemonicParsing="false" onAction="#onLoadClicked" prefHeight="25.0" prefWidth="45.0" text="Load">
                            <HBox.margin>
-                              <Insets left="180.0" top="15.0" />
+                              <Insets left="130.0" top="15.0" />
                            </HBox.margin>
                         </Button>
                      </children>
