@@ -1,4 +1,4 @@
-package com.example.treefractals;
+package com.javafx.treefractals;
 
 import javafx.animation.*;
 import javafx.beans.property.DoubleProperty;
@@ -33,7 +33,7 @@ public class FractalsController {
     private CheckBox chkRndColor;
 
     @FXML
-    private ComboBox< String > cmbChoice;
+    private ComboBox<String> cmbChoice;
 
     @FXML
     private ColorPicker colorPicker;
@@ -42,13 +42,13 @@ public class FractalsController {
     private Canvas myCanvas;
 
     @FXML
-    private Spinner< Double > spDuration;
+    private Spinner<Double> spDuration;
 
     @FXML
-    private Spinner< Integer > spLeftBranch;
+    private Spinner<Integer> spLeftBranch;
 
     @FXML
-    private Spinner< Integer > spRightBranch;
+    private Spinner<Integer> spRightBranch;
 
     @FXML
     private TextField txtUserFractal;
@@ -59,13 +59,19 @@ public class FractalsController {
     private int angleLeft, angleRight, animationDuration;
     private Alert alert;
 
+    private final static double screenWidthScale = 2.0;
+    private final static double screenHeightScale = 0.88589;
+    private final static double canvasWidthScale = 2.033;
+
+    private final static double branchThicknessScale = 0.6;
+    private final static double branchLengthScale = 0.8;
 
     public void initialize() {
         double screenWidth = Screen.getPrimary().getBounds().getWidth();
         double screenHeight = Screen.getPrimary().getBounds().getHeight();
 
-        myCanvas.setWidth(screenWidth * 2);
-        myCanvas.setHeight(screenHeight * 0.88589);
+        myCanvas.setWidth(screenWidth * screenWidthScale);
+        myCanvas.setHeight(screenHeight * screenHeightScale);
 
         gc = myCanvas.getGraphicsContext2D();
         gc.setFill(Color.BLACK);
@@ -105,21 +111,21 @@ public class FractalsController {
 
         colorPicker.setDisable(true);
 
-        if ( chkPickColor.isSelected() ) {
+        if(chkPickColor.isSelected()) {
             colorPicker.setValue(Color.WHITE);
             chkPickColor.setSelected(false);
         }
 
-        if ( chkRndColor.isSelected() ) {
+        if(chkRndColor.isSelected()) {
             chkRndColor.setSelected(false);
         }
     }
 
     public void onComboItemPicked() {
-        if ( !cmbChoice.getSelectionModel().isEmpty() ) {
+        if(!cmbChoice.getSelectionModel().isEmpty()) {
             String choice = cmbChoice.getSelectionModel().getSelectedItem();
 
-            switch ( choice ) {
+            switch(choice) {
                 case "30-30 SIENNA" -> {
                     spLeftBranch.getValueFactory().setValue(30);
                     spRightBranch.getValueFactory().setValue(30);
@@ -186,7 +192,7 @@ public class FractalsController {
 
         btDraw.setDisable(false);
 
-        if ( chkPickColor.isSelected() ) {
+        if(chkPickColor.isSelected()) {
             colorPicker.setValue(Color.WHITE);
             colorPicker.setDisable(true);
             chkPickColor.setSelected(false);
@@ -197,7 +203,7 @@ public class FractalsController {
         btDraw.setDisable(false);
         colorPicker.setDisable(false);
 
-        if ( chkRndColor.isSelected() ) {
+        if(chkRndColor.isSelected()) {
             chkRndColor.setSelected(false);
         }
     }
@@ -232,15 +238,14 @@ public class FractalsController {
         alert.setHeight(175);
         alert.setWidth(500);
 
-        if ( userParams.length != 4 ) {
+        if(userParams.length != 4) {
 
             alert.setContentText("""
                                              Number of params wrong!
                                              Please insert exactly 4 params!
                                          """);
             alert.showAndWait();
-        }
-        else {
+        } else {
             try {
                 Color c = Color.valueOf(userParams[0].toUpperCase());
                 chkPickColor.setSelected(true);
@@ -251,8 +256,7 @@ public class FractalsController {
                 angleRight = Integer.parseInt(userParams[2]);
 
                 animationDuration = Integer.parseInt(userParams[3]);
-            }
-            catch ( Exception e ) {
+            } catch(Exception e) {
                 alert.setContentText("""
                                                  Wrong string format!
                                                  An example of valid string: GREEN.20.50.2000
@@ -262,7 +266,7 @@ public class FractalsController {
             }
 
 
-            if ( (angleLeft < 0 || angleLeft > 150) || (angleRight < 0 || angleRight > 150) || (animationDuration < 1000 || animationDuration > 3000) ) {
+            if((angleLeft < 0 || angleLeft > 150) || (angleRight < 0 || angleRight > 150) || (animationDuration < 1000 || animationDuration > 3000)) {
 
                 alert.setContentText("""
                                                  Params out of bounds!
@@ -270,11 +274,10 @@ public class FractalsController {
                                                  Fourth param must be a value between 1000 and 3000 (included)!
                                              """);
                 alert.showAndWait();
-            }
-            else {
+            } else {
                 spLeftBranch.getValueFactory().setValue(angleLeft);
                 spRightBranch.getValueFactory().setValue(angleRight);
-                spDuration.getValueFactory().setValue(( double ) animationDuration / 1000);
+                spDuration.getValueFactory().setValue((double) animationDuration / 1000);
                 btDraw.setDisable(false);
             }
         }
@@ -298,44 +301,45 @@ public class FractalsController {
         btLoad.setDisable(true);
         cmbChoice.setDisable(true);
 
-        if ( chkPickColor.isSelected() ) {
-            red = ( int ) (colorPicker.getValue().getRed() * 255);
-            blue = ( int ) (colorPicker.getValue().getBlue() * 255);
-            green = ( int ) (colorPicker.getValue().getGreen() * 255);
+        if(chkPickColor.isSelected()) {
+            red = (int) (colorPicker.getValue().getRed() * 255);
+            blue = (int) (colorPicker.getValue().getBlue() * 255);
+            green = (int) (colorPicker.getValue().getGreen() * 255);
         }
 
-        drawBranch(new Point2D(myCanvas.getWidth() / 2.033, myCanvas.getHeight() - 230),
+        drawBranch(new Point2D(myCanvas.getWidth() / canvasWidthScale, myCanvas.getHeight() - 230),
                    -90, myCanvas.getHeight() / 7, 1, 10, 1, Color.rgb(red, green, blue));
     }
 
     /**
+     * A recursive method that draws a single branch given a starting point, the rotation, the length of said branch, its thickness and its color.
+     * For each pair of recursive calls the length, thickness and color of the branches change gradually.
      *
-     * @param start
-     * @param rotation
-     * @param len
-     * @param factorScale
-     * @param lineWidth
-     * @param depth
-     * @param color
+     * @param start:                the starting point of the branch.
+     * @param rotation:             the rotation the branch has to follow.
+     * @param length:               the length of the branch.
+     * @param thicknessFactorScale: the factor that scales the thickness of the branch.
+     * @param thickness:            the thickness of the branch.
+     * @param depth:                a counter used to match the cange of the color to the depth of the branch.
+     * @param color:                the color of the branch.
      */
-    private void drawBranch(Point2D start, double rotation, double len, double factorScale, double lineWidth, int depth, Color color) {
+    private void drawBranch(Point2D start, double rotation, double length, double thicknessFactorScale, double thickness, int depth, Color color) {
         angleLeft = spLeftBranch.getValue();
         angleRight = spRightBranch.getValue();
 
         gc.setStroke(color);
-        Color newColor = calculateColor(depth, color.deriveColor(15, 1, 1, 1));
+        Color newColor = brigtherColor(depth, color.deriveColor(15, 1, 1, 1));
 
-        Point2D end = findEndPoint(start, rotation, len);
+        Point2D end = findEndPoint(start, rotation, length);
 
-        animateLine(start, end, lineWidth, factorScale, () -> {
-            gc.setLineWidth(lineWidth / factorScale);
+        animateBranch(start, end, thickness, thicknessFactorScale, () -> {
+            gc.setLineWidth(thickness / thicknessFactorScale);
             gc.strokeLine(start.getX(), start.getY(), end.getX(), end.getY());
 
-            if ( len > 4 ) {
-                drawBranch(end, rotation - angleLeft, len * 0.8, factorScale / 0.6, lineWidth, depth + 1, newColor);
-                drawBranch(end, rotation + angleRight, len * 0.8, factorScale / 0.6, lineWidth, depth + 1, newColor);
-            }
-            else {
+            if(length > 4) {
+                drawBranch(end, rotation - angleLeft, length * branchLengthScale, thicknessFactorScale / branchThicknessScale, thickness, depth + 1, newColor);
+                drawBranch(end, rotation + angleRight, length * branchLengthScale, thicknessFactorScale / branchThicknessScale, thickness, depth + 1, newColor);
+            } else {
                 btClear.setDisable(false);
                 btDraw.setDisable(true);
 
@@ -344,17 +348,20 @@ public class FractalsController {
     }
 
     /**
+     * A method that animates the drawing of each branch. It requires the starting and end point of said branch, its width and width scale factor.
+     * It also needs a runnable interface to make use of its run method.
+     * It creates a gradual, fluid and steady growth for the branch.
      *
-     * @param start
-     * @param end
-     * @param lineWidth
-     * @param factorScale
-     * @param onFinish
+     * @param start:                the starting point of the branch.
+     * @param end:                  the ending point of the branch.
+     * @param branchThickness:      the thickness of the branch.
+     * @param thicknessFactorScale: the factor that scales the thickness of the branch.
+     * @param onFinish:             runnable interface that has to be executed at the end of the animation.
      */
-    private void animateLine(Point2D start, Point2D end, double lineWidth, double factorScale, Runnable onFinish) {
+    private void animateBranch(Point2D start, Point2D end, double branchThickness, double thicknessFactorScale, Runnable onFinish) {
         DoubleProperty lengthProperty = new SimpleDoubleProperty(0);
 
-        animationDuration = ( int ) (spDuration.getValue() * 1000);
+        animationDuration = (int) (spDuration.getValue() * 1000);
 
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(lengthProperty, 0)),
@@ -367,7 +374,7 @@ public class FractalsController {
             double animatedLength = newValue.doubleValue();
             Point2D animatedEnd = interpolatePoint(start, end, animatedLength / end.distance(start));
 
-            gc.setLineWidth(lineWidth / factorScale);
+            gc.setLineWidth(branchThickness / thicknessFactorScale);
             gc.strokeLine(start.getX(), start.getY(), animatedEnd.getX(), animatedEnd.getY());
         });
 
@@ -375,11 +382,13 @@ public class FractalsController {
     }
 
     /**
+     * A method that calculates the approximate value of the next point to draw on a branch.
+     * The point calculeted using this method are the key to a fluid and steady animation.
      *
-     * @param start
-     * @param end
-     * @param fraction
-     * @return
+     * @param start: the starting point of the branch.
+     * @param end: the ending point of the branch.
+     * @param fraction: the remaining distance beetween the calculated point and the end point.
+     * @return the calculated point.
      */
     private Point2D interpolatePoint(Point2D start, Point2D end, double fraction) {
         double x = start.getX() + fraction * (end.getX() - start.getX());
@@ -388,15 +397,16 @@ public class FractalsController {
     }
 
     /**
+     * A method that creates a brigher version of a given color considering the depth of the branch.
      *
-     * @param depth
-     * @param color
-     * @return
+     * @param depth: the depth of the branch.
+     * @param color: the color of the branch.
+     * @return the newly created color
      */
-    private Color calculateColor(int depth, Color color) {
-        int r = ( int ) (color.getRed() * 255);
-        int b = ( int ) (color.getBlue() * 255);
-        int g = ( int ) (color.getGreen() * 255);
+    private Color brigtherColor(int depth, Color color) {
+        int r = (int) (color.getRed() * 255);
+        int b = (int) (color.getBlue() * 255);
+        int g = (int) (color.getGreen() * 255);
 
         int alpha = 50 + (depth * 10);
 
@@ -404,20 +414,21 @@ public class FractalsController {
     }
 
     /**
+     * A method that finds the end point of the branch given the starting point, the rotation the branch has to follow and its lenght.
      *
-     * @param start
-     * @param rotation
-     * @param len
-     * @return
+     * @param branchStart:    the starting point of the branch.
+     * @param branchRotation: the rotation the branch has to follow.
+     * @param branchLength:   the length of the branch.
+     * @return the ending point of the branch.
      */
-    private Point2D findEndPoint(Point2D start, double rotation, double len) {
-        double radians = Math.toRadians(rotation);
+    private Point2D findEndPoint(Point2D branchStart, double branchRotation, double branchLength) {
+        double radians = Math.toRadians(branchRotation);
 
-        double x = start.getX();
-        double y = start.getY();
+        double x = branchStart.getX();
+        double y = branchStart.getY();
 
-        x = x + (len * Math.cos(radians));
-        y = y + (len * Math.sin(radians));
+        x = x + (branchLength * Math.cos(radians));
+        y = y + (branchLength * Math.sin(radians));
 
         return new Point2D(x, y);
     }

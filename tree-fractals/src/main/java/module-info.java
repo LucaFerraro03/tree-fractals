@@ -3,6 +3,6 @@ module com.example.treefractals {
     requires javafx.fxml;
 
 
-    opens com.example.treefractals to javafx.fxml;
-    exports com.example.treefractals;
+    opens com.javafx.treefractals to javafx.fxml;
+    exports com.javafx.treefractals;
 }
