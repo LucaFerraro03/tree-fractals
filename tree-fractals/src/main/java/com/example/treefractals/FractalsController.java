@@ -202,24 +202,24 @@ public class FractalsController {
         }
     }
 
-    public void onInfoClicked(){
+    public void onInfoClicked() {
 
         alert.setTitle("Usage Information");
         alert.setHeaderText(null);
         alert.setContentText("""
-                                Welcome to the 2D Tree Fractals application!
-                                You can have fun building your own tree fractal from scratch
-                                or choose from a variety of premade ones!
-                             
-                                If by any chance you have issues undestanding how to use
-                                this application, make sure to check the README file!
-                                There you will find a more thorough explanation on how
-                                this works, so that nothing will be on the way of
-                                your experience!
-                             
-                                Now let your imagination run free and be sure
-                                to let others know of this app!
-                             """);
+                                        Welcome to the 2D Tree Fractals application!
+                                        You can have fun building your own tree fractal from scratch
+                                        or choose from a variety of premade ones!
+                                                                  
+                                        If by any chance you have issues undestanding how to use
+                                        this application, make sure to check the README file!
+                                        There you will find a more thorough explanation on how
+                                        this works, so that nothing will be on the way of
+                                        your experience!
+                                                                  
+                                        Now let your imagination run free and be sure
+                                        to let others know of this app!
+                                     """);
         alert.showAndWait();
     }
 
@@ -308,6 +308,16 @@ public class FractalsController {
                    -90, myCanvas.getHeight() / 7, 1, 10, 1, Color.rgb(red, green, blue));
     }
 
+    /**
+     *
+     * @param start
+     * @param rotation
+     * @param len
+     * @param factorScale
+     * @param lineWidth
+     * @param depth
+     * @param color
+     */
     private void drawBranch(Point2D start, double rotation, double len, double factorScale, double lineWidth, int depth, Color color) {
         angleLeft = spLeftBranch.getValue();
         angleRight = spRightBranch.getValue();
@@ -333,6 +343,14 @@ public class FractalsController {
         });
     }
 
+    /**
+     *
+     * @param start
+     * @param end
+     * @param lineWidth
+     * @param factorScale
+     * @param onFinish
+     */
     private void animateLine(Point2D start, Point2D end, double lineWidth, double factorScale, Runnable onFinish) {
         DoubleProperty lengthProperty = new SimpleDoubleProperty(0);
 
@@ -356,12 +374,25 @@ public class FractalsController {
         timeline.play();
     }
 
+    /**
+     *
+     * @param start
+     * @param end
+     * @param fraction
+     * @return
+     */
     private Point2D interpolatePoint(Point2D start, Point2D end, double fraction) {
         double x = start.getX() + fraction * (end.getX() - start.getX());
         double y = start.getY() + fraction * (end.getY() - start.getY());
         return new Point2D(x, y);
     }
 
+    /**
+     *
+     * @param depth
+     * @param color
+     * @return
+     */
     private Color calculateColor(int depth, Color color) {
         int r = ( int ) (color.getRed() * 255);
         int b = ( int ) (color.getBlue() * 255);
@@ -372,6 +403,13 @@ public class FractalsController {
         return Color.rgb(r, g, b, alpha / 255.0);
     }
 
+    /**
+     *
+     * @param start
+     * @param rotation
+     * @param len
+     * @return
+     */
     private Point2D findEndPoint(Point2D start, double rotation, double len) {
         double radians = Math.toRadians(rotation);
 
