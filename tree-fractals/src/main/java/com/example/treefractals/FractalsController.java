@@ -71,6 +71,8 @@ public class FractalsController {
         gc.setFill(Color.BLACK);
         gc.fillRect(myCanvas.getLayoutX(), myCanvas.getLayoutY(), myCanvas.getWidth(), myCanvas.getHeight());
 
+        alert = new Alert(Alert.AlertType.INFORMATION);
+
         cmbChoice.setItems(FXCollections.observableArrayList("15-15 GREEN", "30-30 SIENNA", "90-90 OLIVE",
                                                              "30-130 PURPLE", "120-60 YELLOW", "105-75 BLUE",
                                                              "19-89 PINK", "82-8 FUCHSIA", "12-26 SALMON",
@@ -103,8 +105,6 @@ public class FractalsController {
 
         colorPicker.setDisable(true);
 
-        txtUserFractal.setText("");
-
         if ( chkPickColor.isSelected() ) {
             colorPicker.setValue(Color.WHITE);
             chkPickColor.setSelected(false);
@@ -119,7 +119,7 @@ public class FractalsController {
         if ( !cmbChoice.getSelectionModel().isEmpty() ) {
             String choice = cmbChoice.getSelectionModel().getSelectedItem();
 
-            switch(choice) {
+            switch ( choice ) {
                 case "30-30 SIENNA" -> {
                     spLeftBranch.getValueFactory().setValue(30);
                     spRightBranch.getValueFactory().setValue(30);
@@ -203,7 +203,7 @@ public class FractalsController {
     }
 
     public void onInfoClicked(){
-        alert = new Alert(Alert.AlertType.INFORMATION);
+
         alert.setTitle("Usage Information");
         alert.setHeaderText(null);
         alert.setContentText("""
@@ -234,13 +234,13 @@ public class FractalsController {
 
         if ( userParams.length != 4 ) {
 
-           alert.setContentText("""
-                                    Number of params wrong!
-                                    Please insert exactly 4 params!
-                                """);
-           alert.showAndWait();
+            alert.setContentText("""
+                                             Number of params wrong!
+                                             Please insert exactly 4 params!
+                                         """);
+            alert.showAndWait();
         }
-        else{
+        else {
             try {
                 Color c = Color.valueOf(userParams[0].toUpperCase());
                 chkPickColor.setSelected(true);
@@ -254,9 +254,9 @@ public class FractalsController {
             }
             catch ( Exception e ) {
                 alert.setContentText("""
-                                     Wrong string format!
-                                     An example of valid string: GREEN.20.50.2000
-                                 """);
+                                                 Wrong string format!
+                                                 An example of valid string: GREEN.20.50.2000
+                                             """);
                 alert.showAndWait();
                 return;
             }
@@ -265,10 +265,10 @@ public class FractalsController {
             if ( (angleLeft < 0 || angleLeft > 150) || (angleRight < 0 || angleRight > 150) || (animationDuration < 1000 || animationDuration > 3000) ) {
 
                 alert.setContentText("""
-                                     Params out of bounds!
-                                     Second and third param must be a value between 0 and 150 (included)!
-                                     Fourth param must be a value between 1000 and 3000 (included)!
-                                 """);
+                                                 Params out of bounds!
+                                                 Second and third param must be a value between 0 and 150 (included)!
+                                                 Fourth param must be a value between 1000 and 3000 (included)!
+                                             """);
                 alert.showAndWait();
             }
             else {
