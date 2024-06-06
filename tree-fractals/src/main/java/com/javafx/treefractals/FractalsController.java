@@ -216,13 +216,13 @@ public class FractalsController {
                                         Welcome to the 2D Tree Fractals application!
                                         You can have fun building your own tree fractal from scratch
                                         or choose from a variety of premade ones!
-                                                                  
+                                     
                                         If by any chance you have issues undestanding how to use
                                         this application, make sure to check the README file!
                                         There you will find a more thorough explanation on how
                                         this works, so that nothing will be on the way of
                                         your experience!
-                                                                  
+                                     
                                         Now let your imagination run free and be sure
                                         to let others know of this app!
                                      """);
